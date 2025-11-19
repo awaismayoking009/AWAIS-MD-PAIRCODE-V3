@@ -1,78 +1,79 @@
-{
-  "name": "awais-md-paircode-v3",
-  "version": "1.0.0",
-  "description": "Paircode Generator for Awais MD Bot by Awais Mayoking",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "@whiskeysockets/baileys": "6.6.0",
-    "pino": "^8.1.0",
-    "qrcode": "^1.5.0",
-    "express": "^4.18.2"
-  }
-}
-
-nano index.js
-const { makeWASocket, useMultiFileAuthState, jidNormalizedUser, fetchLatestBaileysVersion, delay } = require('@whiskeysockets/baileys');
-const Pino = require('pino');
-const qrcode = require('qrcode');
-const express = require('express');
-
-const app = express();
-const PORT = process.env.PORT || 3000;
-const PAIRING_NUMBER = process.env.PAIRING_NUMBER || "923040488788"; // Apna number yahan dalen
-
-async function startPairCodeGenerator() {
-    const { state } = useMultiFileAuthState('auth_info');
-    const { version } = await fetchLatestBaileysVersion();
-
-    const sock = makeWASocket({
-        version,
-        logger: Pino({ level: 'silent' }),
-        printQRInTerminal: false,
-        auth: state,
-        browser: ["Awais MD PairCode", "Chrome", "1.0.0"],
-    });
-
-    if (!sock.authState.creds.registered) {
-        await delay(1000);
-        const phoneNumber = jidNormalizedUser(PAIRING_NUMBER.replace(/[^0-9]/g, ''));
-        const code = await sock.requestPairingCode(phoneNumber);
-
-        // Front-End (Design) ke liye HTML serve karna
-        app.get('/', async (req, res) => {
-            res.send(`
-                <div style="text-align: center; margin-top: 100px;">
-                    <h1>Awais MD Bot Pair Code</h1>
-                    <p>Use this code in WhatsApp Link Device section:</p>
-                    <h2 style="color: blue; font-size: 30px;">${code}</h2>
-                    <p>This server will close after successful pairing.</p>
-                </div>
-            `);
-        });
-    }
-
-    sock.ev.on('connection.update', (update) => {
-        const { connection, lastDisconnect } = update;
-        if (connection === 'open') {
-            console.log('Pairing successful! Server is closing...');
-            process.exit(0);
-        }
-        if (connection === 'close') {
-            if (lastDisconnect.error.output.statusCode !== 401) {
-                console.error('Connection closed unexpectedly. Restarting...');
-            } else {
-                console.log('Credentials revoked. Delete auth_info and restart.');
-            }
-        }
-    });
-}
-
-startPairCodeGenerator();
-
-app.listen(PORT, () => {
-    console.log(\`PairCode Generator running on port ${PORT}\`);
-});
-
+            // Front-End (Stylish Design) ke liye HTML serve karna
+            app.get('/', async (req, res) => {
+                res.send(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Awais MD Pair Site</title>
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                background-image: url('https://i.ibb.co/fVqM4g0Q/Snapchat-917555013.jpg'); 
+                                background-size: cover;
+                                background-position: center;
+                                background-repeat: no-repeat;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                                font-family: sans-serif;
+                            }
+                            .container {
+                                background-color: rgba(255, 255, 255, 0.95);
+                                padding: 30px;
+                                border-radius: 15px;
+                                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                                text-align: center;
+                                max-width: 350px;
+                                width: 90%;
+                            }
+                            h1 {
+                                color: #333;
+                                margin-bottom: 5px;
+                            }
+                            h2 {
+                                color: #8A2BE2; /* Violet Color for Pairing Code */
+                                font-size: 28px;
+                                margin-top: 10px;
+                                padding: 10px;
+                                border: 2px solid #8A2BE2;
+                                border-radius: 8px;
+                                display: inline-block;
+                            }
+                            .welcome {
+                                color: #FFD700; /* Gold Heart Color */
+                                font-weight: bold;
+                                font-size: 1.1em;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <p class="welcome">💛 WELCOME TO AWAIS MD BOT PAIR SITE 💛</p>
+                            <h1>🌐 AWAIS MD PAIRING CODE 🌐</h1>
+                            <h2>${code}</h2>
+                            <p style="color: #666; font-size: 0.9em;">Use this code in WhatsApp Link Device section.</p>
+                            
+                            <a href="https://whatsapp.com/channel/0029VbBzlMlIt5rzSeMBE922" target="_blank" style="
+                                display: block;
+                                margin-top: 15px;
+                                padding: 10px 20px;
+                                background-color: #25D366; /* WhatsApp Green */
+                                color: white;
+                                text-decoration: none;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                transition: background-color 0.3s;
+                            ">
+                                JOIN AWAIS MD WHATSAPP CHANNEL
+                            </a>
+                            <p style="font-size: 0.8em; margin-top: 20px;">Server will close after successful pairing.</p>
+                        </div>
+                    </body>
+                    </html>
+                `);
+            });
+            // ... Baaqi code yahan se shuru hota hai
