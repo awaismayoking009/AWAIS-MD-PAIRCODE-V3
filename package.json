@@ -1,79 +1,44 @@
-            // Front-End (Stylish Design) ke liye HTML serve karna
-            app.get('/', async (req, res) => {
-                res.send(`
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Awais MD Pair Site</title>
-                        <style>
-                            body {
-                                margin: 0;
-                                padding: 0;
-                                background-image: url('https://i.ibb.co/fVqM4g0Q/Snapchat-917555013.jpg'); 
-                                background-size: cover;
-                                background-position: center;
-                                background-repeat: no-repeat;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                height: 100vh;
-                                font-family: sans-serif;
-                            }
-                            .container {
-                                background-color: rgba(255, 255, 255, 0.95);
-                                padding: 30px;
-                                border-radius: 15px;
-                                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-                                text-align: center;
-                                max-width: 350px;
-                                width: 90%;
-                            }
-                            h1 {
-                                color: #333;
-                                margin-bottom: 5px;
-                            }
-                            h2 {
-                                color: #8A2BE2; /* Violet Color for Pairing Code */
-                                font-size: 28px;
-                                margin-top: 10px;
-                                padding: 10px;
-                                border: 2px solid #8A2BE2;
-                                border-radius: 8px;
-                                display: inline-block;
-                            }
-                            .welcome {
-                                color: #FFD700; /* Gold Heart Color */
-                                font-weight: bold;
-                                font-size: 1.1em;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="container">
-                            <p class="welcome">💛 WELCOME TO AWAIS MD BOT PAIR SITE 💛</p>
-                            <h1>🌐 AWAIS MD PAIRING CODE 🌐</h1>
-                            <h2>${code}</h2>
-                            <p style="color: #666; font-size: 0.9em;">Use this code in WhatsApp Link Device section.</p>
-                            
-                            <a href="https://whatsapp.com/channel/0029VbBzlMlIt5rzSeMBE922" target="_blank" style="
-                                display: block;
-                                margin-top: 15px;
-                                padding: 10px 20px;
-                                background-color: #25D366; /* WhatsApp Green */
-                                color: white;
-                                text-decoration: none;
-                                border-radius: 5px;
-                                font-weight: bold;
-                                transition: background-color 0.3s;
-                            ">
-                                JOIN AWAIS MD WHATSAPP CHANNEL
-                            </a>
-                            <p style="font-size: 0.8em; margin-top: 20px;">Server will close after successful pairing.</p>
-                        </div>
-                    </body>
-                    </html>
-                `);
-            });
-            // ... Baaqi code yahan se shuru hota hai
+{
+  "name": "awais-hell-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp Bot created by Awais",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Awais",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "database": "database",
+    "session": "session",
+    "media": "media"
+  },
+  "dependencies": {
+    "@adiwajshing/keyed-db": "^0.2.4",
+    "@hapi/boom": "^10.0.0",
+    "@whiskeysockets/baileys": "^6.7.2",
+    "@distube/ytdl-core": "^4.13.3",
+    "awesome-phonenumber": "^5.9.0",
+    "axios": "^1.6.7",
+    "chalk": "^4.1.2",
+    "cheerio": "^1.0.0-rc.12",
+    "child_process": "^1.0.2",
+    "cookie": "^0.6.0",
+    "file-type": "^18.1.0",
+    "fluent-ffmpeg": "^2.1.2",
+    "form-data": "^4.0.0",
+    "fs-extra": "^11.1.1",
+    "human-readable": "^0.2.1",
+    "jimp": "^0.16.13",
+    "jsdom": "^24.0.0",
+    "moment-timezone": "^0.5.43",
+    "node-cache": "^5.1.2",
+    "node-fetch": "^2.6.11",
+    "node-id3": "^0.2.3",
+    "node-webpmux": "^3.1.7",
+    "node-youtube-music": "^0.8.3",
+    "performance-now": "^2.1.0"
+  }
+}
